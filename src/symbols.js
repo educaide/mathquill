@@ -2,7 +2,12 @@
  * Symbols and Special Characters
  *********************************/
 
-LatexCmds.f = bind(Symbol, 'f', '<var class="florin">&fnof;</var><span style="display:inline-block;width:0">&nbsp;</span>');
+// 2016-01-24: EAS changes for Problem-Attic
+
+// EAS removed .f
+// EAS added .eff .scriptf .fnof
+LatexCmds.eff = LatexCmds.scriptf = LatexCmds.fnof =
+LatexCmds.florin = bind(Symbol, 'f', '<var class="florin">&fnof;</var><span style="display:inline-block;width:0">&nbsp;</span>');
 
 var Variable = P(Symbol, function(_, _super) {
   _.init = function(ch, html) {
@@ -220,6 +225,8 @@ LatexCmds['±'] = LatexCmds.pm = LatexCmds.plusmn = LatexCmds.plusminus =
 LatexCmds.mp = LatexCmds.mnplus = LatexCmds.minusplus =
   bind(PlusMinus,'\\mp ','&#8723;');
 
+// EAS added .t
+LatexCmds.t =
 CharCmds['*'] = LatexCmds.sdot = LatexCmds.cdot =
   bind(BinaryOperator, '\\cdot ', '&middot;');
 //semantically should be &sdot;, but &middot; looks better
@@ -239,8 +246,12 @@ LatexCmds.otimes = P(BinaryOperator, function(_, _super) {
   };
 });
 
+// EAS added .x
+LatexCmds.x =
 LatexCmds.times = bind(BinaryOperator, '\\times ', '&times;', '[x]');
 
+// EAS added .d
+LatexCmds.d =
 LatexCmds['÷'] = LatexCmds.div = LatexCmds.divide = LatexCmds.divides =
   bind(BinaryOperator,'\\div ','&divide;', '[/]');
 
@@ -394,6 +405,8 @@ LatexCmds.simeq = bind(VanillaSymbol, '\\simeq ', '&#8771;');
 LatexCmds.mid = bind(VanillaSymbol, '\\mid ', '&#8739;');
 LatexCmds.ll = bind(VanillaSymbol, '\\ll ', '&#8810;');
 LatexCmds.gg = bind(VanillaSymbol, '\\gg ', '&#8811;');
+// EAS add .para
+LatexCmds.para =
 LatexCmds.parallel = bind(VanillaSymbol, '\\parallel ', '&#8741;');
 LatexCmds.bowtie = bind(VanillaSymbol, '\\bowtie ', '&#8904;');
 LatexCmds.sqsubset = bind(VanillaSymbol, '\\sqsubset ', '&#8847;');
@@ -554,9 +567,10 @@ LatexCmds.and = LatexCmds.land = LatexCmds.wedge =
 
 LatexCmds.or = LatexCmds.lor = LatexCmds.vee = bind(VanillaSymbol,'\\vee ','&or;');
 
-LatexCmds.o = LatexCmds.O =
+// EAS removed .o .O .oslash .Oslash
+// EAS added .es
+LatexCmds.es =
 LatexCmds.empty = LatexCmds.emptyset =
-LatexCmds.oslash = LatexCmds.Oslash =
 LatexCmds.nothing = LatexCmds.varnothing =
   bind(BinaryOperator,'\\varnothing ','&empty;');
 
@@ -565,6 +579,8 @@ LatexCmds.cup = LatexCmds.union = bind(BinaryOperator,'\\cup ','&cup;');
 LatexCmds.cap = LatexCmds.intersect = LatexCmds.intersection =
   bind(BinaryOperator,'\\cap ','&cap;');
 
+// EAS added .degrees
+LatexCmds.degrees =
 LatexCmds.deg = LatexCmds.degree = bind(VanillaSymbol,'^\\circ ','&deg;');
 
 LatexCmds.ang = LatexCmds.angle = bind(VanillaSymbol,'\\angle ','&ang;');

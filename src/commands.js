@@ -2,6 +2,8 @@
  * Commands and Operators.
  **************************/
 
+// 2016-01-24: EAS changes for Problem-Attic
+
 var CharCmds = {}, LatexCmds = {}; //single character commands, LaTeX commands
 
 var scale, // = function(jQ, x, y) { ... }
@@ -192,7 +194,11 @@ LatexCmds.superscript =
 LatexCmds.supscript =
 LatexCmds['^'] = bind(SupSub, '^', 'sup', '**');
 
+// EAS added .f .df .cf
 var Fraction =
+LatexCmds.f =
+LatexCmds.df =
+LatexCmds.cf =
 LatexCmds.frac =
 LatexCmds.dfrac =
 LatexCmds.cfrac =
@@ -243,7 +249,9 @@ CharCmds['/'] = P(Fraction, function(_, _super) {
   };
 });
 
+// EAS added .r
 var SquareRoot =
+LatexCmds.r =
 LatexCmds.sqrt =
 LatexCmds['√'] = P(MathCommand, function(_, _super) {
   _.ctrlSeq = '\\sqrt';
@@ -282,7 +290,9 @@ var Vec = LatexCmds.vec = P(MathCommand, function(_, _super) {
   _.textTemplate = ['vec(', ')'];
 });
 
+// EAS added .ir
 var NthRoot =
+LatexCmds.ir =
 LatexCmds.nthroot = P(SquareRoot, function(_, _super) {
   _.htmlTemplate =
       '<sup class="nthroot non-leaf">&0</sup>'
@@ -366,6 +376,8 @@ LatexCmds.right = P(MathCommand, function(_) {
   };
 });
 
+// EAS added .braces
+LatexCmds.braces =
 LatexCmds.lbrace =
 CharCmds['{'] = bind(Bracket, '{', '}', '\\{', '\\}');
 LatexCmds.langle =
@@ -401,8 +413,13 @@ var parenMixin = function(_, _super) {
 
 var Paren = P(Bracket, parenMixin);
 
+// EAS added .parens
+LatexCmds.parens =
 LatexCmds.lparen =
 CharCmds['('] = bind(Paren, '(', ')');
+
+// EAS added .bracks
+LatexCmds.bracks =
 LatexCmds.lbrack =
 LatexCmds.lbracket =
 CharCmds['['] = bind(Paren, '[', ']');
@@ -415,7 +432,9 @@ LatexCmds.rbrack =
 LatexCmds.rbracket =
 CharCmds[']'] = bind(CloseParen, '[', ']');
 
+// EAS added .abs
 var Pipes =
+LatexCmds.abs =
 LatexCmds.lpipe =
 LatexCmds.rpipe =
 CharCmds['|'] = P(Paren, function(_, _super) {
