@@ -349,7 +349,7 @@ var MathBlock = P(MathElement, function(_) {
   };
   _.write = function(cursor, ch, replacedFragment) {
     var cmd;
-    if (ch.match(/^[a-zA-Z]$/)) //EAS no longer exclude f. F has been removed as a synonym for a florin in symbol.js, and we want it to render as f.
+    if (ch.match(/^[a-zA-Z]$/)) //EAS add f (was special-cased for florin)
       cmd = Variable(ch);
     else if (cmd = CharCmds[ch] || LatexCmds[ch])
       cmd = cmd(ch);

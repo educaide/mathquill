@@ -280,6 +280,8 @@ LatexCmds['≥'] = LatexCmds.ge = LatexCmds.geq = bind(BinaryOperator,'\\ge ','&
 
 LatexCmds.isin = LatexCmds['in'] = bind(BinaryOperator,'\\in ','&isin;');
 
+// EAS added .owns
+LatexCmds.owns =
 LatexCmds.ni = LatexCmds.contains = bind(BinaryOperator,'\\ni ','&ni;');
 
 LatexCmds.notni = LatexCmds.niton = LatexCmds.notcontains = LatexCmds.doesnotcontain =
@@ -447,6 +449,8 @@ LatexCmds.vdots = bind(VanillaSymbol, '\\vdots ', '&#8942;');
 LatexCmds.ddots = bind(VanillaSymbol, '\\ddots ', '&#8944;');
 LatexCmds.surd = bind(VanillaSymbol, '\\surd ', '&#8730;');
 LatexCmds.triangle = bind(VanillaSymbol, '\\triangle ', '&#9653;');
+// EAS added .scriptl
+LatexCmds.scriptl =
 LatexCmds.ell = bind(VanillaSymbol, '\\ell ', '&#8467;');
 LatexCmds.top = bind(VanillaSymbol, '\\top ', '&#8868;');
 LatexCmds.flat = bind(VanillaSymbol, '\\flat ', '&#9837;');
@@ -502,6 +506,8 @@ LatexCmds.setminus = LatexCmds.smallsetminus =
   bind(VanillaSymbol,'\\setminus ','&#8726;');
 
 LatexCmds.not = //bind(Symbol,'\\not ','<span class="not">/</span>');
+// EAS added .lnot
+LatexCmds.lnot =
 LatexCmds['¬'] = LatexCmds.neg = bind(VanillaSymbol,'\\neg ','&not;');
 
 LatexCmds['…'] = LatexCmds.dots = LatexCmds.ellip = LatexCmds.hellip =

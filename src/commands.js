@@ -187,9 +187,13 @@ var SupSub = P(MathCommand, function(_, _super) {
   };
 });
 
+// EAS added .sb
+LatexCmds.sb =
 LatexCmds.subscript =
 LatexCmds._ = bind(SupSub, '_', 'sub', '_');
 
+// EAS added .sp
+LatexCmds.sp =
 LatexCmds.superscript =
 LatexCmds.supscript =
 LatexCmds['^'] = bind(SupSub, '^', 'sup', '**');
