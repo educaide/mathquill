@@ -3,6 +3,7 @@
  *********************************/
 
 // 2016-01-24: EAS changes for Problem-Attic
+// 2016-01-28: More EAS changes for Problem-Attic
 
 // EAS removed .f
 // EAS added .eff .scriptf .fnof
@@ -481,8 +482,9 @@ LatexCmds.rfloor = bind(VanillaSymbol, '\\rfloor ', '&#8971;');
 LatexCmds.lceil = bind(VanillaSymbol, '\\lceil ', '&#8968;');
 LatexCmds.rceil = bind(VanillaSymbol, '\\rceil ', '&#8969;');
 LatexCmds.slash = bind(VanillaSymbol, '\\slash ', '&#47;');
-LatexCmds.opencurlybrace = bind(VanillaSymbol, '\\opencurlybrace ', '&#123;');
-LatexCmds.closecurlybrace = bind(VanillaSymbol, '\\closecurlybrace ', '&#125;');
+// EAS removed .opencurlybrace and .closecurlybrace, added .lbrace and .rbrace
+LatexCmds.lbrace = bind(VanillaSymbol, '\\opencurlybrace ', '&#123;');
+LatexCmds.rbrace = bind(VanillaSymbol, '\\closecurlybrace ', '&#125;');
 
 //various symbols
 
@@ -564,8 +566,8 @@ LatexCmds.inf = LatexCmds.infin = LatexCmds.infty = LatexCmds.infinity =
 LatexCmds.alef = LatexCmds.alefsym = LatexCmds.aleph = LatexCmds.alephsym =
   bind(VanillaSymbol,'\\aleph ','&alefsym;');
 
-LatexCmds.xist = //LOL
-LatexCmds.xists = LatexCmds.exist = LatexCmds.exists =
+// EAS removed .xist, .xists
+LatexCmds.exist = LatexCmds.exists =
   bind(VanillaSymbol,'\\exists ','&exist;');
 
 LatexCmds.and = LatexCmds.land = LatexCmds.wedge =

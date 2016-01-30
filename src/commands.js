@@ -3,6 +3,7 @@
  **************************/
 
 // 2016-01-24: EAS changes for Problem-Attic
+// 2016-01-28: More EAS changes for Problem-Attic
 
 var CharCmds = {}, LatexCmds = {}; //single character commands, LaTeX commands
 
@@ -380,9 +381,8 @@ LatexCmds.right = P(MathCommand, function(_) {
   };
 });
 
-// EAS added .braces
+// EAS removed .lbrace, added .braces
 LatexCmds.braces =
-LatexCmds.lbrace =
 CharCmds['{'] = bind(Bracket, '{', '}', '\\{', '\\}');
 LatexCmds.langle =
 LatexCmds.lang = bind(Bracket, '&lang;','&rang;','\\langle ','\\rangle ');
@@ -404,7 +404,7 @@ var CloseBracket = P(Bracket, function(_, _super) {
   };
 });
 
-LatexCmds.rbrace =
+// EAS removed .rbrace
 CharCmds['}'] = bind(CloseBracket, '{','}','\\{','\\}');
 LatexCmds.rangle =
 LatexCmds.rang = bind(CloseBracket, '&lang;','&rang;','\\langle ','\\rangle ');
