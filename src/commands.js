@@ -199,13 +199,11 @@ LatexCmds.superscript =
 LatexCmds.supscript =
 LatexCmds['^'] = bind(SupSub, '^', 'sup', '**');
 
-// EAS added .f .df .cf
+// EAS added .f .cf, removed .dfrac
 var Fraction =
 LatexCmds.f =
-LatexCmds.df =
 LatexCmds.cf =
 LatexCmds.frac =
-LatexCmds.dfrac =
 LatexCmds.cfrac =
 LatexCmds.fraction = P(MathCommand, function(_, _super) {
   _.ctrlSeq = '\\frac';
@@ -222,6 +220,27 @@ LatexCmds.fraction = P(MathCommand, function(_, _super) {
     this.down = this.ends[L].down = this.ends[R];
   };
 });
+
+// EAS
+var DisplayFraction =
+LatexCmds.F =
+LatexCmds.df =
+LatexCmds.dfrac = P(MathCommand, function(_, _super) {
+  _.ctrlSeq = '\\dfrac';
+  _.htmlTemplate =
+      '<span class="fraction non-leaf displaystyle">'
+    +   '<span class="numerator">&0</span>'
+    +   '<span class="denominator">&1</span>'
+    +   '<span style="display:inline-block;width:0">&nbsp;</span>'
+    + '</span>'
+  ;
+  _.textTemplate = ['[', '/', ']'];
+  _.finalizeTree = function() {
+    this.up = this.ends[R].up = this.ends[L];
+    this.down = this.ends[L].down = this.ends[R];
+  };
+});
+
 
 var LiveFraction =
 LatexCmds.over =

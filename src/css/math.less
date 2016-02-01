@@ -61,8 +61,16 @@
     margin: 0 -0.1em;
   }
 
+  // EAS, was 125%, lowered after adding displaystyle
+  // presumably the font scale is needed so there's adequate space
+  // between upper and lower limits; we'll go with magstep1
   big {
-    font-size: 125%;
+    font-size: 120%;
+  }
+
+  // EAS, added, treat displaystyle as magstep2
+  big.displaystyle {
+    font-size: 144%;
   }
 
   .roman {
@@ -132,6 +140,7 @@
     .denominator {
       padding-top: 0;
     }
+
   }
 
   sup {
@@ -187,13 +196,18 @@
   }
 
   ////
+  // EAS reduced font to distinguish displaystyle
   // \frac
   // fractions
   .fraction {
-    font-size: 90%;
+    font-size: 80%;
     text-align: center;
     vertical-align: -.5em;
     padding: 0 .2em;
+  }
+
+  .fraction.displaystyle {
+    font-size: 100%;
   }
 
   // Firefox 2 (and older?) only
@@ -211,8 +225,10 @@
     display: block;
   }
 
+
+  //EAS increased padding bottom for reduced font
   .numerator {
-    padding: 0 0.1em;
+    padding: 0 0.1em 0.1em;
     margin-bottom: -0.1em;
   }
 
@@ -224,6 +240,15 @@
     margin-right: -.1em;
     margin-left: -.1em;
   }
+
+  .numerator .displaystyle {
+    padding: 0 0.1em 0.25em;
+  }
+
+  .denominator .displaystyle {
+    padding: .15em .1em 0 .1em;
+  }
+
 
   ////
   // \sqrt

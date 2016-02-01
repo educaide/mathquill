@@ -8,7 +8,7 @@
 // EAS removed .f
 // EAS added .eff .scriptf .fnof
 LatexCmds.eff = LatexCmds.scriptf = LatexCmds.fnof =
-LatexCmds.florin = bind(Symbol, 'f', '<var class="florin">&fnof;</var><span style="display:inline-block;width:0">&nbsp;</span>');
+LatexCmds.florin = bind(Symbol, '\\florin', '<var class="florin">&fnof;</var><span style="display:inline-block;width:0">&nbsp;</span>');
 
 var Variable = P(Symbol, function(_, _super) {
   _.init = function(ch, html) {
@@ -337,11 +337,19 @@ LatexCmds['∏'] = LatexCmds.prod = LatexCmds.product = bind(BigSymbol,'\\prod '
 LatexCmds.coprod = LatexCmds.coproduct = bind(BigSymbol,'\\coprod ','&#8720;');
 LatexCmds['∫'] = LatexCmds['int'] = LatexCmds.integral = bind(BigSymbol,'\\int ','&int;');
 
-
+//EAS added Sum, Int, Integral
+var DisplayBigSymbol = P(Symbol, function(_, _super) {
+  _.init = function(ch, html) {
+    _super.init.call(this, ch, '<big class="displaystyle">'+html+'</big>');
+  };
+});
+LatexCmds.Sum = LatexCmds.Summation = bind(DisplayBigSymbol,'\\Sum ','&sum;');
+LatexCmds['Int'] = LatexCmds.Integral = bind(DisplayBigSymbol,'\\Int ','&int;');
 
 //the canonical sets of numbers
 LatexCmds.N = LatexCmds.naturals = LatexCmds.Naturals =
   bind(VanillaSymbol,'\\mathbb{N}','&#8469;');
+
 
 LatexCmds.P =
 LatexCmds.primes = LatexCmds.Primes =
