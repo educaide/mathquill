@@ -140,9 +140,12 @@ var SupSub = P(MathCommand, function(_, _super) {
   };
   _.respace = function() {
     if (
-      this[L].ctrlSeq === '\\int ' || (
+      this[L].ctrlSeq === '\\int ' ||
+      this[L].ctrlSeq === '\\Int ' (
         this[L] instanceof SupSub && this[L].ctrlSeq != this.ctrlSeq
-        && this[L][L] && this[L][L].ctrlSeq === '\\int '
+        && this[L][L] &&
+          (this[L][L].ctrlSeq === '\\int ' ||
+           this[L][L].ctrlSeq === '\\Int ')
       )
     ) {
       if (!this.limit) {
