@@ -1,4 +1,13 @@
-.mathquill-rendered-math {
+.mq-root-block, .mq-math-mode .mq-root-block {
+  .inline-block;
+  width: 100%;
+  padding: 2px;
+  .box-sizing(border-box); // supported by IE8+: http://caniuse.com/css3-boxsizing
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.mq-math-mode {
   font-variant: normal;
   font-weight: normal;
   font-style: normal;
@@ -6,12 +15,12 @@
   line-height: 1;
 
   .inline-block;
-  .non-leaf, .scaled {
+  .mq-non-leaf, .mq-scaled {
     .inline-block;
   }
 
   // TODO: dasherize non-symbola
-  var, .text, .nonSymbola {
+  var, .mq-text-mode, .mq-nonSymbola {
     font-family: @times;
     line-height: .9;
   }
@@ -23,23 +32,34 @@
     padding: 0;
     border-color: black;
     .user-select(none);
+    box-sizing: border-box;
   }
 
   // TODO: what's the difference between these?
-  .empty {
+  .mq-empty {
     background: #ccc;
+    &.mq-root-block {
+      background: transparent;
+    }
   }
 
-  &.empty {
+  &.mq-empty {
     background: transparent;
   }
 
 
-  .text {
-    font-size: 87%;
+  .mq-text-mode {
+    display: inline-block;
+  }
+  .mq-text-mode.mq-hasCursor {
+    box-shadow: inset darkgray 0 .1em .2em;
+    padding: 0 .1em;
+    margin: 0 -.1em;
+
+    min-width: 1ex;
   }
 
-  .font {
+  .mq-font {
     font: 1em @times;
 
     * {
@@ -49,239 +69,342 @@
   }
 
   // TODO [Han]: Why do we have to special-case .font?
-  b, b.font {
+  b, b.mq-font {
     font-weight: bolder;
   }
 
-  var, i, i.font {
+  var, i, i.mq-font {
     font-style: italic;
   }
 
-  var.florin {
-    margin: 0 -0.1em;
+  var.mq-f {
+    margin-right: 0.2em;
+    margin-left: 0.1em;
   }
 
-  // EAS, was 125%, lowered after adding displaystyle
-  // presumably font scale is needed to separate upper/lower limits
+  .mq-roman var.mq-f {
+    margin: 0;
+  }
+
   big {
-    font-size: 120%;
+    font-size: 200%;
   }
 
-  // EAS
-  big.displaystyle {
-    font-size: 150%;
+  .mq-int {
+    > big {
+      display: inline-block;
+      .transform(scaleX(.7));
+      vertical-align: -.16em;
+    }
+
+    > .mq-supsub {
+      font-size: 80%;
+      vertical-align: -1.1em;
+      padding-right: .2em;
+
+      > .mq-sup > .mq-sup-inner {
+        vertical-align: 1.3em;
+      }
+
+      > .mq-sub {
+        margin-left: -.35em;
+      }
+    }
   }
 
-  .roman {
+  .mq-roman {
     font-style: normal;
   }
 
-  .sans-serif {
+  .mq-sans-serif {
     font-family: sans-serif, Symbola, serif;
   }
 
-  .monospace {
+  .mq-monospace {
     font-family: monospace, Symbola, serif;
   }
 
-  .overline {
+  .mq-overline {
     border-top: 1px solid black;
     margin-top: 1px;
   }
-  .underline {
+  .mq-underline {
     border-bottom: 1px solid black;
     margin-bottom: 1px;
+  }
+  .mq-math-mode .mq-arc {
+    border-top: 1px solid black;
+    padding-top: 0.3em;
+    border-radius: 0.5em;
   }
 
   ////
   // operators
   @operator-padding: 0.2em;
 
-  .binary-operator {
+  .mq-binary-operator {
     padding: 0 @operator-padding;
     .inline-block;
-  }
-
-  .unary-operator {
-    padding-left: @operator-padding;
   }
 
   ////
   // ^, _
   // sup/sub
-  sup, sub {
-    position: relative;
+  // TODO: try http://jsbin.com/gabunebe/3/edit instead
+  //   obsoletes the &nbsp; in HTML template, but needs cross-browser
+  //   testing. Should also make the superscript shrink to the size of
+  //   its contents, rather than always being as wide as the subscript.
+  //   See also .fraction
+  .mq-supsub {
+    text-align: left;
     font-size: 90%;
+    vertical-align: -.5em;
 
-    .binary-operator {
+    &.mq-sup-only {
+      vertical-align: .5em;
+
+      .mq-sup {
+        display: inline-block;
+        vertical-align: text-bottom;
+      }
+    }
+
+    .mq-sup {
+      display: block;
+    }
+
+    .mq-sub {
+      display: block;
+      float: left;
+    }
+
+    .mq-binary-operator {
       padding: 0 .1em;
-    }
-
-    .unary-operator {
-      padding-left: .1em;
-    }
-
-    &.limit, &.nthroot {
-      font-size: 80%;
     }
 
     // special styles for fractions
     // within sup/sub.
-    .fraction {
+    .mq-fraction {
       font-size: 70%;
-      vertical-align: -0.4em;
-    }
-
-    .numerator {
-      padding-bottom: 0;
-    }
-
-    .denominator {
-      padding-top: 0;
-    }
-
-  }
-
-  sup {
-    vertical-align: .5em;
-    &.limit, &.nthroot {
-      vertical-align: 0.8em
-    }
-
-    &.nthroot {
-      margin-right: -.6em;
-      margin-left: .2em;
-      min-width: .5em;
     }
   }
 
-  sub {
-    vertical-align: -.4em;
-
-    &.limit {
-      vertical-align: -.6em;
-    }
+  sup.mq-nthroot {
+    font-size: 80%;
+    vertical-align: 0.8em;
+    margin-right: -.6em;
+    margin-left: .2em;
+    min-width: .5em;
   }
 
   ////
   // parentheses
-  .paren {
+  .mq-paren {
     padding: 0 .1em;
-    vertical-align: bottom;
-    -webkit-transform-origin: bottom center;
-    -moz-transform-origin: bottom center;
-    -ms-transform-origin: bottom center;
-    -o-transform-origin: bottom center;
-    transform-origin: bottom center;
+    vertical-align: top;
+    -webkit-transform-origin: center .06em;
+    -moz-transform-origin: center .06em;
+    -ms-transform-origin: center .06em;
+    -o-transform-origin: center .06em;
+    transform-origin: center .06em;
+
+    &.mq-ghost { color: silver; }
+
+    + span {
+      margin-top: .1em;
+      margin-bottom: .1em;
+    }
   }
 
-  .array {
+  .mq-array {
     vertical-align: middle;
     text-align: center;
   }
 
-  .array > span {
+  .mq-array > span {
     display: block;
   }
 
   ////
-  // non-italicized functions
+  // non-italicized operator names
   // like \sin, \cos, \ln, etc.
-  .non-italicized-function {
+  .mq-operator-name {
     font-family: Symbola, "Times New Roman", serif;
     line-height: .9;
     font-style: normal;
+  }
+  var.mq-operator-name.mq-first {
+    padding-left: .2em;
+  }
+  var.mq-operator-name.mq-last, .mq-supsub.mq-after-operator-name {
     padding-right: .2em;
   }
 
   ////
-  // EAS reduced font to distinguish displaystyle
   // \frac
   // fractions
-  .fraction {
-    font-size: 80%;
+  // TODO: try http://jsbin.com/gabunebe/4/edit instead
+  //   obsoletes the &nbsp; in HTML template, but needs cross-browser
+  //   testing. See also .supsub
+  .mq-fraction {
+    font-size: 90%;
     text-align: center;
-    vertical-align: -.5em;
+    vertical-align: -.4em;
     padding: 0 .2em;
-  }
-
-  .fraction.displaystyle {
-    font-size: 100%;
   }
 
   // Firefox 2 (and older?) only
   // because display:inline-block is FUBAR in Gecko < 1.9.0
-  .fraction, x:-moz-any-link {
+  .mq-fraction, .mq-large-operator, x:-moz-any-link {
     display: -moz-groupbox;
   }
 
   // Firefox 3+ (Gecko 1.9.0+)
-  .fraction, x:-moz-any-link, x:default {
+  .mq-fraction, .mq-large-operator, x:-moz-any-link, x:default {
     display: inline-block;
   }
 
-  .numerator, .denominator {
+  .mq-numerator, .mq-denominator {
     display: block;
   }
 
-
-  //EAS increased padding bottom for reduced font
-  .numerator {
-    padding: 0 0.1em 0.1em;
-    margin-bottom: -0.1em;
+  .mq-numerator {
+    padding: 0 0.1em;
   }
 
-  .denominator {
+  .mq-denominator {
     border-top: 1px solid;
     float: right; // take out of normal flow to manipulate baseline
     width: 100%;
-    padding: .1em .1em 0 .1em;
-    margin-right: -.1em;
-    margin-left: -.1em;
+    padding: 0.1em;
   }
-
-  .numerator .displaystyle {
-    padding: 0 0.1em 0.25em;
-  }
-
-  .denominator .displaystyle {
-    padding: .15em .1em 0 .1em;
-  }
-
 
   ////
   // \sqrt
   // square roots
-  .sqrt-prefix {
+  .mq-sqrt-prefix {
     padding-top: 0;
     position: relative;
-    top: .1em;
+    top: 0.1em;
     vertical-align: top;
     .transform-origin(top);
   }
 
-  .sqrt-stem {
+  .mq-sqrt-stem {
     border-top: 1px solid;
     margin-top: 1px;
     padding-left: .15em;
     padding-right: .2em;
     margin-right: .1em;
+    padding-top: 1px;
   }
 
-  .vector-prefix {
+  .mq-diacritic-above {
     display: block;
     text-align: center;
-    line-height: .25em;
-    margin-bottom: -.1em;
-    font-size: 0.75em;
-  }	
+    line-height: .4em;
+  }
 
-  .vector-stem {
+  .mq-diacritic-stem {
+    display: block;
+    text-align: center;
+  }
+
+  .mq-hat-prefix {
+    display: block;
+    text-align: center;
+    line-height: .95em;
+    margin-bottom: -.7em;
+    transform: scaleX(1.5);
+    -moz-transform: scaleX(1.5);
+    -o-transform: scaleX(1.5);
+    -webkit-transform: scaleX(1.5);
+  }
+
+  .mq-hat-stem {
     display: block;
   }
 
-  &, .mathquill-editable {
+  .mq-large-operator {
+    vertical-align: -.2em;
+    padding: .2em;
+    text-align: center;
+
+    .mq-from, big, .mq-to  {
+      display: block;
+    }
+    .mq-from, .mq-to  {
+      font-size: 80%;
+    }
+    .mq-from {
+      float: right; /* take out of normal flow to manipulate baseline */
+      width: 100%;
+    }
+  }
+
+
+  &, .mq-editable-field {
     cursor: text;
     font-family: @symbola;
+  }
+
+  .mq-overarrow {
+    border-top: 1px solid black;
+    margin-top: 1px;
+    padding-top: 0.2em;
+
+    &:before {
+      display: block;
+      position: relative;
+      top: -0.43em;
+      right: -0.3em;
+      font-size: 0.5em;
+      line-height: 0em;
+      content: '\2410';
+      text-align: right;
+    }
+    &.mq-arrow-left:before {
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+      -ms-filter: "FlipH";
+    }
+  }
+
+  .mq-line:before {
+    display: inline-block;
+    position: relative;
+    font-size: 0.5em;
+    width: 0em;
+    right: -7px;
+    line-height: 0em;
+    text-align: left;
+    vertical-align: top;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+  }
+  .mq-line:after {
+    display: inline-block;
+    position: relative;
+    font-size: 0.5em;
+    width: 0em;
+    line-height: 0em;
+    content: '\2410';
+    text-align: right;
+    vertical-align: top;
+    right: 7px;
+    top: -0.43em;
+  }
+
+  .mq-arc {
+    border-top: 1px solid black;
+    padding-top: 0.3em;
+    border-radius: 0.5em;
   }
 }
