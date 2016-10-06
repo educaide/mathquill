@@ -31,6 +31,10 @@ CharCmds['\\'] = P(MathCommand, function(_, super_) {
       cursor.show().deleteSelection();
 
       if (ch.match(/[a-z]/i)) VanillaSymbol(ch).createLeftOf(cursor);
+      else if ( ch = '\\' ){
+        VanillaSymbol(ch).createLeftOf(cursor);
+        this.parent.renderCommand(cursor);
+      }
       else {
         this.parent.renderCommand(cursor);
         if (ch !== '\\' || !this.isEmpty()) this.parent.parent.write(cursor, ch);

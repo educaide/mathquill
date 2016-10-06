@@ -161,7 +161,7 @@ var AutoOpNames = Options.p.autoOperatorNames = { _maxLength: 9 }; // the set
   // of operator names that MathQuill auto-unitalicizes by default; overridable
 var TwoWordOpNames = { limsup: 1, liminf: 1, projlim: 1, injlim: 1 };
 (function() {
-  var mostOps = ('arg deg det dim exp gcd hom inf ker lg lim ln log max min sup'
+  var mostOps = ('arg det dim exp gcd hom ker lg lim ln log max min sup'
                  + ' limsup liminf injlim projlim Pr').split(' ');
   for (var i = 0; i < mostOps.length; i += 1) {
     BuiltInOpNames[mostOps[i]] = AutoOpNames[mostOps[i]] = 1;
@@ -230,16 +230,6 @@ LatexCmds.operatorname = P(MathCommand, function(_) {
   _.numBlocks = function() { return 1; };
   _.parser = function() {
     return latexMathParser.block.map(function(b) { return b.children(); });
-  };
-});
-
-LatexCmds.f = P(Letter, function(_, super_) {
-  _.init = function() {
-    Symbol.p.init.call(this, this.letter = 'f', '<var class="mq-f">f</var>');
-  };
-  _.italicize = function(bool) {
-    this.jQ.html('f').toggleClass('mq-f', bool);
-    return super_.italicize.apply(this, arguments);
   };
 });
 
@@ -440,7 +430,7 @@ var PlusMinus = P(BinaryOperator, function(_) {
 
       return 'mq-binary-operator';
     };
-    
+
     if (dir === R) return; // ignore if sibling only changed on the right
     this.jQ[0].className = determineOpClassType(this);
     return this;
@@ -455,7 +445,7 @@ LatexCmds['±'] = LatexCmds.pm = LatexCmds.plusmn = LatexCmds.plusminus =
 LatexCmds.mp = LatexCmds.mnplus = LatexCmds.minusplus =
   bind(PlusMinus,'\\mp ','&#8723;');
 
-CharCmds['*'] = LatexCmds.sdot = LatexCmds.cdot =
+CharCmds['*'] = LatexCmds.sdot = LatexCmds.cdot = LatexCmds.t =
   bind(BinaryOperator, '\\cdot ', '&middot;', '*');
 //semantically should be &sdot;, but &middot; looks better
 
@@ -509,9 +499,9 @@ var Equality = P(BinaryOperator, function(_, super_) {
 });
 LatexCmds['='] = Equality;
 
-LatexCmds['×'] = LatexCmds.times = bind(BinaryOperator, '\\times ', '&times;', '[x]');
+LatexCmds['×'] = LatexCmds.times = LatexCmds.x = bind(BinaryOperator, '\\times ', '&times;', '[x]');
 
-LatexCmds['÷'] = LatexCmds.div = LatexCmds.divide = LatexCmds.divides =
+LatexCmds['÷'] = LatexCmds.div = LatexCmds.d = LatexCmds.divide = LatexCmds.divides =
   bind(BinaryOperator,'\\div ','&divide;', '[/]');
 
 CharCmds['~'] = LatexCmds.sim = bind(BinaryOperator, '\\sim ', '~', '~');

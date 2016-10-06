@@ -29,7 +29,7 @@ LatexCmds['≈'] = LatexCmds.asymp = LatexCmds.approx = bind(BinaryOperator,'\\a
 
 LatexCmds.isin = LatexCmds['in'] = bind(BinaryOperator,'\\in ','&isin;');
 
-LatexCmds.ni = LatexCmds.contains = bind(BinaryOperator,'\\ni ','&ni;');
+LatexCmds.ni = LatexCmds.contains = LatexCmds.owns = bind(BinaryOperator,'\\ni ','&ni;');
 
 LatexCmds.notni = LatexCmds.niton = LatexCmds.notcontains = LatexCmds.doesnotcontain =
   bind(BinaryOperator,'\\not\\ni ','&#8716;');
@@ -100,8 +100,10 @@ LatexCmds.H = LatexCmds.Hamiltonian = LatexCmds.quaternions = LatexCmds.Quaterni
   bind(VanillaSymbol,'\\mathbb{H}','&#8461;');
 
 //spacing
-LatexCmds.quad = LatexCmds.emsp = bind(VanillaSymbol,'\\quad ','    ');
-LatexCmds.qquad = bind(VanillaSymbol,'\\qquad ','        ');
+LatexCmds.quad = LatexCmds.emsp = bind(VanillaSymbol,'\\quad ','<span style="margin-right:1em"></span>');
+LatexCmds.qquad = bind(VanillaSymbol,'\\qquad ','<span style="margin-right:2em"></span>');
+LatexCmds['\\'] = bind(VanillaSymbol,'\\\\','<span style="margin-right:.1em"></span>');
+
 /* spacing special characters, gonna have to implement this in LatexCommandInput::onText somehow
 case ',':
   return VanillaSymbol('\\, ',' ');
@@ -141,7 +143,7 @@ LatexCmds.simeq = bind(VanillaSymbol, '\\simeq ', '&#8771;');
 LatexCmds.mid = bind(VanillaSymbol, '\\mid ', '&#8739;');
 LatexCmds.ll = bind(VanillaSymbol, '\\ll ', '&#8810;');
 LatexCmds.gg = bind(VanillaSymbol, '\\gg ', '&#8811;');
-LatexCmds.parallel = bind(VanillaSymbol, '\\parallel ', '&#8741;');
+LatexCmds.parallel = LatexCmds.para = bind(VanillaSymbol, '\\parallel ', '&#8741;');
 LatexCmds.nparallel = bind(VanillaSymbol, '\\nparallel ', '&#8742;');
 LatexCmds.bowtie = bind(VanillaSymbol, '\\bowtie ', '&#8904;');
 LatexCmds.sqsubset = bind(VanillaSymbol, '\\sqsubset ', '&#8847;');
@@ -184,7 +186,7 @@ LatexCmds.vdots = bind(VanillaSymbol, '\\vdots ', '&#8942;');
 LatexCmds.ddots = bind(VanillaSymbol, '\\ddots ', '&#8945;');
 LatexCmds.surd = bind(VanillaSymbol, '\\surd ', '&#8730;');
 LatexCmds.triangle = bind(VanillaSymbol, '\\triangle ', '&#9651;');
-LatexCmds.ell = bind(VanillaSymbol, '\\ell ', '&#8467;');
+LatexCmds.ell = LatexCmds.scriptl = bind(VanillaSymbol, '\\ell ', '&#8467;');
 LatexCmds.top = bind(VanillaSymbol, '\\top ', '&#8868;');
 LatexCmds.flat = bind(VanillaSymbol, '\\flat ', '&#9837;');
 LatexCmds.natural = bind(VanillaSymbol, '\\natural ', '&#9838;');
@@ -240,7 +242,7 @@ LatexCmds.setminus = LatexCmds.smallsetminus =
   bind(VanillaSymbol,'\\setminus ','&#8726;');
 
 LatexCmds.not = //bind(Symbol,'\\not ','<span class="not">/</span>');
-LatexCmds['¬'] = LatexCmds.neg = bind(VanillaSymbol,'\\neg ','&not;');
+LatexCmds['¬'] = LatexCmds.lnot = LatexCmds.neg = bind(VanillaSymbol,'\\neg ','&not;');
 
 LatexCmds['…'] = LatexCmds.dots = LatexCmds.ellip = LatexCmds.hellip =
 LatexCmds.ellipsis = LatexCmds.hellipsis =
@@ -290,16 +292,17 @@ LatexCmds.image = LatexCmds.imagin = LatexCmds.imaginary = LatexCmds.Imaginary =
 
 LatexCmds.part = LatexCmds.partial = bind(VanillaSymbol,'\\partial ','&part;');
 
-LatexCmds.infty = LatexCmds.infin = LatexCmds.infinity =
+LatexCmds.infty = LatexCmds.infin = LatexCmds.infinity = LatexCmds.inf =
   bind(VanillaSymbol,'\\infty ','&infin;');
+
+LatexCmds.florin = bind(VanillaSymbol,'\\florin ','&fnof;');
 
 LatexCmds.alef = LatexCmds.alefsym = LatexCmds.aleph = LatexCmds.alephsym =
   bind(VanillaSymbol,'\\aleph ','&alefsym;');
 
-LatexCmds.xist = //LOL
-LatexCmds.xists = LatexCmds.exist = LatexCmds.exists =
+LatexCmds.exist = LatexCmds.exists =
   bind(VanillaSymbol,'\\exists ','&exist;');
-  
+
 LatexCmds.nexists = LatexCmds.nexist =
       bind(VanillaSymbol, '\\nexists ', '&#8708;');
 
@@ -308,11 +311,9 @@ LatexCmds.and = LatexCmds.land = LatexCmds.wedge =
 
 LatexCmds.or = LatexCmds.lor = LatexCmds.vee = bind(VanillaSymbol,'\\vee ','&or;');
 
-LatexCmds.o = LatexCmds.O =
 LatexCmds.empty = LatexCmds.emptyset =
-LatexCmds.oslash = LatexCmds.Oslash =
-LatexCmds.nothing = LatexCmds.varnothing =
-  bind(BinaryOperator,'\\varnothing ','&empty;');
+LatexCmds.es = LatexCmds.nothing =
+LatexCmds.varnothing = bind(BinaryOperator,'\\varnothing ','&empty;');
 
 LatexCmds.cup = LatexCmds.union = bind(BinaryOperator,'\\cup ','&cup;');
 
@@ -320,7 +321,7 @@ LatexCmds.cap = LatexCmds.intersect = LatexCmds.intersection =
   bind(BinaryOperator,'\\cap ','&cap;');
 
 // FIXME: the correct LaTeX would be ^\circ but we can't parse that
-LatexCmds.deg = LatexCmds.degree = bind(VanillaSymbol,'\\degree ','&deg;');
+LatexCmds.deg = LatexCmds.degree = LatexCmds.degrees = bind(VanillaSymbol,'\\degree ','&deg;');
 
 LatexCmds.ang = LatexCmds.angle = bind(VanillaSymbol,'\\angle ','&ang;');
 LatexCmds.measuredangle = bind(VanillaSymbol,'\\measuredangle ','&#8737;');

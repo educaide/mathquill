@@ -78,12 +78,12 @@ LatexCmds.mathsf = bind(Style, '\\mathsf', 'span', 'class="mq-sans-serif mq-font
 LatexCmds.mathtt = bind(Style, '\\mathtt', 'span', 'class="mq-monospace mq-font"');
 //text-decoration
 LatexCmds.underline = bind(Style, '\\underline', 'span', 'class="mq-non-leaf mq-underline"');
-LatexCmds.overline = LatexCmds.bar = bind(Style, '\\overline', 'span', 'class="mq-non-leaf mq-overline"');
+LatexCmds.overline = LatexCmds.bar = LatexCmds.seg = bind(Style, '\\overline', 'span', 'class="mq-non-leaf mq-overline"');
 LatexCmds.overrightarrow = bind(Style, '\\overrightarrow', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-right"');
 LatexCmds.overleftarrow = bind(Style, '\\overleftarrow', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-left"');
 LatexCmds.arc = bind(Style, '\\arc', 'span', 'class="mq-non-leaf mq-overline mq-arc"');
 LatexCmds.ray = bind(Style, '\\ray', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-right"');
-LatexCmds.line = bind(Style, '\\line', 'span', 'class="mq-non-leaf mq-overarrow mq-line"');
+LatexCmds.line = bind(Style, '\\lin', 'span', 'class="mq-non-leaf mq-overarrow mq-line"');
 
 
 // `\textcolor{color}{math}` will apply a color to the given math content, where
@@ -288,6 +288,7 @@ function insLeftOfMeUnlessAtEnd(cursor) {
 }
 
 LatexCmds.subscript =
+LatexCmds.sb =
 LatexCmds._ = P(SupSub, function(_, super_) {
   _.supsub = 'sub';
   _.htmlTemplate =
@@ -305,6 +306,7 @@ LatexCmds._ = P(SupSub, function(_, super_) {
 });
 
 LatexCmds.superscript =
+LatexCmds.sp =
 LatexCmds.supscript =
 LatexCmds['^'] = P(SupSub, function(_, super_) {
   _.supsub = 'sup';
@@ -318,6 +320,59 @@ LatexCmds['^'] = P(SupSub, function(_, super_) {
     this.upInto = this.sup = this.ends[R];
     this.sup.downOutOf = insLeftOfMeUnlessAtEnd;
     super_.finalizeTree.call(this);
+  };
+});
+
+var BigSummationNotation = P(MathCommand, function(_, super_) {
+  _.init = function(ch, html) {
+    var htmlTemplate =
+      '<span class="mq-large-operator mq-non-leaf displaystyle">'
+    +   '<span class="mq-to"><span>&1</span></span>'
+    +   '<big class="displaystyle">'+html+'</big>'
+    +   '<span class="mq-from"><span>&0</span></span>'
+    + '</span>'
+    ;
+    Symbol.prototype.init.call(this, ch, htmlTemplate);
+  };
+  _.createLeftOf = function(cursor) {
+    super_.createLeftOf.apply(this, arguments);
+    if (cursor.options.sumStartsWithNEquals) {
+      Letter('n').createLeftOf(cursor);
+      Equality().createLeftOf(cursor);
+    }
+  };
+  _.latex = function() {
+    function simplify(latex) {
+      return latex.length === 1 ? latex : '{' + (latex || ' ') + '}';
+    }
+    return this.ctrlSeq + '_' + simplify(this.ends[L].latex()) +
+      '^' + simplify(this.ends[R].latex());
+  };
+  _.parser = function() {
+    var string = Parser.string;
+    var optWhitespace = Parser.optWhitespace;
+    var succeed = Parser.succeed;
+    var block = latexMathParser.block;
+
+    var self = this;
+    var blocks = self.blocks = [ MathBlock(), MathBlock() ];
+    for (var i = 0; i < blocks.length; i += 1) {
+      blocks[i].adopt(self, self.ends[R], 0);
+    }
+
+    return optWhitespace.then(string('_').or(string('^'))).then(function(supOrSub) {
+      var child = blocks[supOrSub === '_' ? 0 : 1];
+      return block.then(function(block) {
+        block.children().adopt(child, child.ends[R], 0);
+        return succeed(self);
+      });
+    }).many().result(self);
+  };
+  _.finalizeTree = function() {
+    this.downInto = this.ends[L];
+    this.upInto = this.ends[R];
+    this.ends[L].upOutOf = this.ends[R];
+    this.ends[R].downOutOf = this.ends[L];
   };
 });
 
@@ -378,6 +433,9 @@ LatexCmds['∑'] =
 LatexCmds.sum =
 LatexCmds.summation = bind(SummationNotation,'\\sum ','&sum;');
 
+LatexCmds.Sum =
+LatexCmds.Summation = bind(BigSummationNotation,'\\Sum ','&sum;');
+
 LatexCmds['∏'] =
 LatexCmds.prod =
 LatexCmds.product = bind(SummationNotation,'\\prod ','&prod;');
@@ -405,14 +463,53 @@ LatexCmds.integral = P(SummationNotation, function(_, super_) {
   _.createLeftOf = MathCommand.p.createLeftOf;
 });
 
+LatexCmds.Integral =
+LatexCmds.Int = P(SummationNotation, function(_, super_) {
+  _.init = function() {
+    var htmlTemplate =
+      '<span class="mq-int mq-non-leaf displaystyle">'
+    +   '<big class="displaystyle">&int;</big>'
+    +   '<span class="mq-supsub mq-non-leaf">'
+    +     '<span class="mq-sup"><span class="mq-sup-inner">&1</span></span>'
+    +     '<span class="mq-sub">&0</span>'
+    +     '<span style="display:inline-block;width:0">&#8203</span>'
+    +   '</span>'
+    + '</span>'
+    ;
+    Symbol.prototype.init.call(this, '\\Int ', htmlTemplate);
+  };
+  // FIXME: refactor rather than overriding
+  _.createLeftOf = MathCommand.p.createLeftOf;
+});
+
 var Fraction =
+LatexCmds.f =
+LatexCmds.cf =
 LatexCmds.frac =
-LatexCmds.dfrac =
 LatexCmds.cfrac =
 LatexCmds.fraction = P(MathCommand, function(_, super_) {
   _.ctrlSeq = '\\frac';
   _.htmlTemplate =
       '<span class="mq-fraction mq-non-leaf">'
+    +   '<span class="mq-numerator">&0</span>'
+    +   '<span class="mq-denominator">&1</span>'
+    +   '<span style="display:inline-block;width:0">&#8203;</span>'
+    + '</span>'
+  ;
+  _.textTemplate = ['(', ')/(', ')'];
+  _.finalizeTree = function() {
+    this.upInto = this.ends[R].upOutOf = this.ends[L];
+    this.downInto = this.ends[L].downOutOf = this.ends[R];
+  };
+});
+
+var DisplayFraction =
+LatexCmds.F =
+LatexCmds.df =
+LatexCmds.dfrac = P(MathCommand, function(_, super_) {
+  _.ctrlSeq = '\\df';
+  _.htmlTemplate =
+      '<span class="mq-fraction mq-non-leaf displaystyle">'
     +   '<span class="mq-numerator">&0</span>'
     +   '<span class="mq-denominator">&1</span>'
     +   '<span style="display:inline-block;width:0">&#8203;</span>'
@@ -458,6 +555,7 @@ CharCmds['/'] = P(Fraction, function(_, super_) {
 
 var SquareRoot =
 LatexCmds.sqrt =
+LatexCmds.r =
 LatexCmds['√'] = P(MathCommand, function(_, super_) {
   _.ctrlSeq = '\\sqrt';
   _.htmlTemplate =
@@ -496,7 +594,7 @@ var Hat = LatexCmds.hat = P(MathCommand, function(_, super_) {
 });
 
 var NthRoot =
-LatexCmds.nthroot = P(SquareRoot, function(_, super_) {
+LatexCmds.nthroot = LatexCmds.ir = P(SquareRoot, function(_, super_) {
   _.htmlTemplate =
       '<sup class="mq-nthroot mq-non-leaf">&0</sup>'
     + '<span class="mq-scaled">'

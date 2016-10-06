@@ -87,7 +87,11 @@
   }
 
   big {
-    font-size: 200%;
+    font-size: 120%;
+
+    &.displaystyle {
+      font-size: 150%;
+    }
   }
 
   .mq-int {
@@ -127,6 +131,7 @@
   .mq-overline {
     border-top: 1px solid black;
     margin-top: 1px;
+    padding-top: 0.2em;
   }
   .mq-underline {
     border-bottom: 1px solid black;
@@ -247,10 +252,14 @@
   //   obsoletes the &nbsp; in HTML template, but needs cross-browser
   //   testing. See also .supsub
   .mq-fraction {
-    font-size: 90%;
+    font-size: 80%;
     text-align: center;
     vertical-align: -.4em;
     padding: 0 .2em;
+
+    &.displaystyle {
+      font-size: 100%;
+    }
   }
 
   // Firefox 2 (and older?) only
@@ -269,7 +278,11 @@
   }
 
   .mq-numerator {
-    padding: 0 0.1em;
+    padding: 0 0.1em 0.1em;
+
+    &.displaystyle {
+      padding: 0 0.1em 0.25em;
+    }
   }
 
   .mq-denominator {
@@ -277,6 +290,10 @@
     float: right; // take out of normal flow to manipulate baseline
     width: 100%;
     padding: 0.1em;
+
+    &.displaystyle {
+      padding: 0.15em 0.1em 0 0.1em;
+    }
   }
 
   ////
