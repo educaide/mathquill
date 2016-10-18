@@ -488,7 +488,7 @@ LatexCmds.cf =
 LatexCmds.frac =
 LatexCmds.cfrac =
 LatexCmds.fraction = P(MathCommand, function(_, super_) {
-  _.ctrlSeq = '\\frac';
+  _.ctrlSeq = '\\f';
   _.htmlTemplate =
       '<span class="mq-fraction mq-non-leaf">'
     +   '<span class="mq-numerator">&0</span>'
@@ -528,7 +528,7 @@ CharCmds['/'] = P(Fraction, function(_, super_) {
   _.createLeftOf = function(cursor) {
     if (!this.replacedFragment) {
       var leftward = cursor[L];
-      while (leftward &&
+      if (leftward &&
         !(
           leftward instanceof BinaryOperator ||
           leftward instanceof (LatexCmds.text || noop) ||
