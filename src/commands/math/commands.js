@@ -83,7 +83,7 @@ LatexCmds.overrightarrow = bind(Style, '\\overrightarrow', 'span', 'class="mq-no
 LatexCmds.overleftarrow = bind(Style, '\\overleftarrow', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-left"');
 LatexCmds.arc = bind(Style, '\\arc', 'span', 'class="mq-non-leaf mq-overline mq-arc"');
 LatexCmds.ray = bind(Style, '\\ray', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-right"');
-LatexCmds.line = bind(Style, '\\lin', 'span', 'class="mq-non-leaf mq-overarrow mq-line"');
+LatexCmds.line = LatexCmds.lin = bind(Style, '\\lin', 'span', 'class="mq-non-leaf mq-overarrow mq-line"');
 
 
 // `\textcolor{color}{math}` will apply a color to the given math content, where
