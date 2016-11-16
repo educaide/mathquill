@@ -351,9 +351,10 @@ var RootTextBlock = P(RootMathBlock, function(_, super_) {
 
     if ( key === "Ctrl-M") {
       RootMathCommand(this.cursor).createLeftOf(this.cursor);
+      return;
     }
 
-    //return super_.keystroke.apply(this, arguments);
+    return super_.keystroke.apply(this, arguments);
   };
   _.write = function(cursor, ch) {
     cursor.show().deleteSelection();
