@@ -341,7 +341,7 @@ var RootMathCommand = P(MathCommand, function(_, super_) {
     };
   };
   _.latex = function() {
-    return '$' + this.ends[L].latex() + '$';
+    return "\\mqmm " + this.ends[L].latex() + "\\endmqmm";
   };
 });
 
@@ -358,15 +358,10 @@ var RootTextBlock = P(RootMathBlock, function(_, super_) {
   };
   _.write = function(cursor, ch) {
     cursor.show().deleteSelection();
-    //if (ch === '$') {
-    //  RootMathCommand(cursor).createLeftOf(cursor);
-    //}
-    //else {
-      var html;
-      if (ch === '<') html = '&lt;';
-      else if (ch === '>') html = '&gt;';
-      VanillaSymbol(ch, html).createLeftOf(cursor);
-    //}
+    var html;
+    if (ch === '<') html = '&lt;';
+    else if (ch === '>') html = '&gt;';
+    VanillaSymbol(ch, html).createLeftOf(cursor);
   };
 });
 API.TextField = function(APIClasses) {
