@@ -132,6 +132,8 @@ LatexCmds.dagger = bind(VanillaSymbol, '\\dagger ', '&#0134;');
 LatexCmds.ddagger = bind(VanillaSymbol, '\\ddagger ', '&#135;');
 LatexCmds.wr = bind(VanillaSymbol, '\\wr ', '&#8768;');
 LatexCmds.amalg = bind(VanillaSymbol, '\\amalg ', '&#8720;');
+LatexCmds.notequiv = bind(VanillaSymbol, '\\notequiv ', '&nequiv;');
+LatexCmds.notcong = bind(VanillaSymbol, '\\notcong ', '&ncong;');
 
 //relationship symbols
 LatexCmds.models = bind(VanillaSymbol, '\\models ', '&#8872;');
@@ -144,7 +146,7 @@ LatexCmds.mid = bind(VanillaSymbol, '\\mid ', '&#8739;');
 LatexCmds.ll = bind(VanillaSymbol, '\\ll ', '&#8810;');
 LatexCmds.gg = bind(VanillaSymbol, '\\gg ', '&#8811;');
 LatexCmds.parallel = LatexCmds.para = bind(VanillaSymbol, '\\parallel ', '&#8741;');
-LatexCmds.nparallel = bind(VanillaSymbol, '\\nparallel ', '&#8742;');
+LatexCmds.nparallel = LatexCmds.notpara = bind(VanillaSymbol, '\\notpara ', '&#8742;');
 LatexCmds.bowtie = bind(VanillaSymbol, '\\bowtie ', '&#8904;');
 LatexCmds.sqsubset = bind(VanillaSymbol, '\\sqsubset ', '&#8847;');
 LatexCmds.sqsupset = bind(VanillaSymbol, '\\sqsupset ', '&#8848;');
@@ -152,11 +154,13 @@ LatexCmds.smile = bind(VanillaSymbol, '\\smile ', '&#8995;');
 LatexCmds.sqsubseteq = bind(VanillaSymbol, '\\sqsubseteq ', '&#8849;');
 LatexCmds.sqsupseteq = bind(VanillaSymbol, '\\sqsupseteq ', '&#8850;');
 LatexCmds.doteq = bind(VanillaSymbol, '\\doteq ', '&#8784;');
+LatexCmds.qeq = bind(VanillaSymbol, '\\qeq ', '&#8799;');
 LatexCmds.frown = bind(VanillaSymbol, '\\frown ', '&#8994;');
 LatexCmds.vdash = bind(VanillaSymbol, '\\vdash ', '&#8870;');
 LatexCmds.dashv = bind(VanillaSymbol, '\\dashv ', '&#8867;');
-LatexCmds.nless = bind(VanillaSymbol, '\\nless ', '&#8814;');
-LatexCmds.ngtr = bind(VanillaSymbol, '\\ngtr ', '&#8815;');
+LatexCmds.notsim = bind(VanillaSymbol, '\\notsim ', '&#8769;');
+LatexCmds.notlt = LatexCmds.nless = bind(VanillaSymbol, '\\notlt ', '&#8814;');
+LatexCmds.notgt = LatexCmds.ngtr = bind(VanillaSymbol, '\\notgt ', '&#8815;');
 
 //arrows
 LatexCmds.longleftarrow = bind(VanillaSymbol, '\\longleftarrow ', '&#8592;');
