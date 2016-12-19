@@ -299,7 +299,7 @@ LatexCmds.part = LatexCmds.partial = bind(VanillaSymbol,'\\partial ','&part;');
 LatexCmds.infty = LatexCmds.infin = LatexCmds.infinity = LatexCmds.inf =
   bind(VanillaSymbol,'\\infty ','&infin;');
 
-LatexCmds.florin = bind(VanillaSymbol,'\\florin ','&fnof;');
+LatexCmds.eff = LatexCmds.scriptf = LatexCmds.fnof = LatexCmds.florin = bind(VanillaSymbol,'\\florin ','&fnof;');
 
 LatexCmds.alef = LatexCmds.alefsym = LatexCmds.aleph = LatexCmds.alephsym =
   bind(VanillaSymbol,'\\aleph ','&alefsym;');
