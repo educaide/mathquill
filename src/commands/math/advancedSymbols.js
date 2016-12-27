@@ -12,11 +12,18 @@ LatexCmds.otimes = P(BinaryOperator, function(_, super_) {
   };
 });
 
+// EAS use entity to prevent confusion with a tilde or tie (&nbsp;)
+LatexCmds.sim = bind(BinaryOperator, '\\sim ', '&#126;');
+
 LatexCmds['≠'] = LatexCmds.ne = LatexCmds.neq = bind(BinaryOperator,'\\ne ','&ne;');
 
-LatexCmds.ast = LatexCmds.star = LatexCmds.loast = LatexCmds.lowast =
+// EAS separate asterisk and star
+LatexCmds.ast = LatexCmds.loast = LatexCmds.lowast =
   bind(BinaryOperator,'\\ast ','&lowast;');
-  //case 'there4 = // a special exception for this one, perhaps?
+
+LatexCmds.star = bind(BinaryOperator,'\\star','&#8902;');
+
+//case 'there4 = // a special exception for this one, perhaps?
 LatexCmds.therefor = LatexCmds.therefore =
   bind(BinaryOperator,'\\therefore ','&there4;');
 
@@ -201,9 +208,15 @@ LatexCmds.clubsuit = bind(VanillaSymbol, '\\clubsuit ', '&#9827;');
 LatexCmds.diamondsuit = bind(VanillaSymbol, '\\diamondsuit ', '&#9826;');
 LatexCmds.heartsuit = bind(VanillaSymbol, '\\heartsuit ', '&#9825;');
 LatexCmds.spadesuit = bind(VanillaSymbol, '\\spadesuit ', '&#9824;');
-//not real LaTex command see https://github.com/mathquill/mathquill/pull/552 for more details
-LatexCmds.parallelogram = bind(VanillaSymbol, '\\parallelogram ', '&#9649;');
-LatexCmds.square = bind(VanillaSymbol, '\\square ', '&#11036;');
+
+// EAS geometry
+LatexCmds.llgram = LatexCmds.parallelogram =
+  bind(VanillaSymbol, '\\llgram ', '&#9649;');
+LatexCmds.square = LatexCmds.whitesquare =
+  bind(VanillaSymbol, '\\square ', '&#11036;');
+LatexCmds.quadr = LatexCmds.quadrilateral =
+LatexCmds.rect = LatexCmds.rectangle =
+  bind(VanillaSymbol, '\\quadr ', '&#9645;');
 
 //variable-sized
 LatexCmds.oint = bind(VanillaSymbol, '\\oint ', '&#8750;');
@@ -299,7 +312,7 @@ LatexCmds.part = LatexCmds.partial = bind(VanillaSymbol,'\\partial ','&part;');
 LatexCmds.infty = LatexCmds.infin = LatexCmds.infinity = LatexCmds.inf =
   bind(VanillaSymbol,'\\infty ','&infin;');
 
-LatexCmds.florin = bind(VanillaSymbol,'\\florin ','&fnof;');
+LatexCmds.eff = LatexCmds.scriptf = LatexCmds.fnof = LatexCmds.florin = bind(VanillaSymbol,'\\florin ','&fnof;');
 
 LatexCmds.alef = LatexCmds.alefsym = LatexCmds.aleph = LatexCmds.alephsym =
   bind(VanillaSymbol,'\\aleph ','&alefsym;');
@@ -307,17 +320,17 @@ LatexCmds.alef = LatexCmds.alefsym = LatexCmds.aleph = LatexCmds.alephsym =
 LatexCmds.exist = LatexCmds.exists =
   bind(VanillaSymbol,'\\exists ','&exist;');
 
-LatexCmds.nexists = LatexCmds.nexist =
-      bind(VanillaSymbol, '\\nexists ', '&#8708;');
+// EAS
+LatexCmds.nexists = LatexCmds.nexist = LatexCmds.notexists =
+  bind(VanillaSymbol, '\\nexists ', '&#8708;');
 
 LatexCmds.and = LatexCmds.land = LatexCmds.wedge =
   bind(VanillaSymbol,'\\wedge ','&and;');
 
 LatexCmds.or = LatexCmds.lor = LatexCmds.vee = bind(VanillaSymbol,'\\vee ','&or;');
 
-LatexCmds.empty = LatexCmds.emptyset =
-LatexCmds.es = LatexCmds.nothing =
-LatexCmds.varnothing = bind(BinaryOperator,'\\varnothing ','&empty;');
+LatexCmds.es = LatexCmds.emptyset = LatexCmds.empty =
+LatexCmds.varnothing = LatexCmds.nothing = bind(BinaryOperator,'\\varnothing ','&empty;');
 
 LatexCmds.cup = LatexCmds.union = bind(BinaryOperator,'\\cup ','&cup;');
 
