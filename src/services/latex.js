@@ -75,7 +75,7 @@ var latexMathParser = (function() {
 
 Controller.open(function(_, super_) {
   _.exportLatex = function() {
-    return this.root.latex().replace(/(\\[a-z]+) (?![a-z])/ig,'$1');
+    return this.root.latex().replace(/(\\[a-z]+) (?![a-z])/ig,'$1').replace(/^\$/g,"\\$").replace(/([^\\])\$/g,"$1\\$").replace(/([^\\])\$/g,"$1\\$").replace(/(\\mqmm *|\\endmqmm)/g,"$");
   };
   _.writeLatex = function(latex) {
     var cursor = this.notify('edit').cursor;
