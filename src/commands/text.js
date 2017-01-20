@@ -378,5 +378,8 @@ API.TextField = function(APIClasses) {
       }
       return this.__controller.exportLatex();
     };
+    _.addMathBlock = function() {
+      return RootMathCommand(this.__controller.cursor).createLeftOf(this.__controller.cursor);
+    }
   });
 };
