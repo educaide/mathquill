@@ -346,13 +346,15 @@ var RootMathCommand = P(MathCommand, function(_, super_) {
 });
 
 var RootTextBlock = P(RootMathBlock, function(_, super_) {
-  _.keystroke = function(key) {
+  _.keystroke = function(key, e, ctrlr) {
     if (key === 'Spacebar' || key === 'Shift-Spacebar') return;
 
-    if ( key === "Ctrl-M") {
+    if ( key === "Ctrl-M" || key === "Meta-M" ) {
       RootMathCommand(this.cursor).createLeftOf(this.cursor);
+      e.preventDefault();
       return;
     }
+
 
     return super_.keystroke.apply(this, arguments);
   };
@@ -378,8 +380,5 @@ API.TextField = function(APIClasses) {
       }
       return this.__controller.exportLatex();
     };
-    _.addMathBlock = function() {
-      return RootMathCommand(this.__controller.cursor).createLeftOf(this.__controller.cursor);
-    }
   });
 };

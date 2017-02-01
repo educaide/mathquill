@@ -370,12 +370,15 @@ var MathBlock = P(MathElement, function(_, super_) {
       return;
     }
 
-    if ( key === "Ctrl-M") {
+    if ( key === "Ctrl-M" || key === "Meta-M" ) {
       if (!ctrlr.cursor[R])
         ctrlr.cursor.insRightOf(this.parent);
       else if (!ctrlr.cursor[L])
         ctrlr.cursor.insLeftOf(this.parent);
+
+      e.preventDefault();
     }
+
 
     return super_.keystroke.apply(this, arguments);
   };
