@@ -337,41 +337,33 @@ var RootMathCommand = P(MathCommand, function(_, super_) {
 
     this.ends[L].cursor = this.cursor;
     this.ends[L].write = function(cursor, ch) {
-      if (ch !== '$')
-        MathBlock.prototype.write.call(this, cursor, ch);
-      else if (this.isEmpty()) {
-        cursor.insRightOf(this.parent);
-        this.parent.deleteTowards(dir, cursor);
-        VanillaSymbol('\\$','$').createLeftOf(cursor.show());
-      }
-      else if (!cursor[R])
-        cursor.insRightOf(this.parent);
-      else if (!cursor[L])
-        cursor.insLeftOf(this.parent);
-      else
-        MathBlock.prototype.write.call(this, cursor, ch);
+      MathBlock.prototype.write.call(this, cursor, ch);
     };
   };
   _.latex = function() {
-    return '$' + this.ends[L].latex() + '$';
+    return "\\mqmm " + this.ends[L].latex() + "\\endmqmm";
   };
 });
 
 var RootTextBlock = P(RootMathBlock, function(_, super_) {
-  _.keystroke = function(key) {
+  _.keystroke = function(key, e, ctrlr) {
     if (key === 'Spacebar' || key === 'Shift-Spacebar') return;
+
+    if ( key === "Ctrl-M" || key === "Meta-M" ) {
+      RootMathCommand(this.cursor).createLeftOf(this.cursor);
+      e.preventDefault();
+      return;
+    }
+
+
     return super_.keystroke.apply(this, arguments);
   };
   _.write = function(cursor, ch) {
     cursor.show().deleteSelection();
-    if (ch === '$')
-      RootMathCommand(cursor).createLeftOf(cursor);
-    else {
-      var html;
-      if (ch === '<') html = '&lt;';
-      else if (ch === '>') html = '&gt;';
-      VanillaSymbol(ch, html).createLeftOf(cursor);
-    }
+    var html;
+    if (ch === '<') html = '&lt;';
+    else if (ch === '>') html = '&gt;';
+    VanillaSymbol(ch, html).createLeftOf(cursor);
   };
 });
 API.TextField = function(APIClasses) {

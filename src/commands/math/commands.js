@@ -76,15 +76,19 @@ LatexCmds.mathit = bind(Style, '\\mathit', 'i', 'class="mq-font"');
 LatexCmds.mathbf = bind(Style, '\\mathbf', 'b', 'class="mq-font"');
 LatexCmds.mathsf = bind(Style, '\\mathsf', 'span', 'class="mq-sans-serif mq-font"');
 LatexCmds.mathtt = bind(Style, '\\mathtt', 'span', 'class="mq-monospace mq-font"');
+
 //text-decoration
 LatexCmds.underline = bind(Style, '\\underline', 'span', 'class="mq-non-leaf mq-underline"');
-LatexCmds.overline = LatexCmds.bar = LatexCmds.seg = bind(Style, '\\overline', 'span', 'class="mq-non-leaf mq-overline"');
+LatexCmds.overline = bind(Style, '\\overline', 'span', 'class="mq-non-leaf mq-overline"');
 LatexCmds.overrightarrow = bind(Style, '\\overrightarrow', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-right"');
 LatexCmds.overleftarrow = bind(Style, '\\overleftarrow', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-left"');
+
+// EAS \bar and \seg should be separate from \overline, typesetting is different
+LatexCmds.bar = bind(Style, '\\bar', 'span', 'class="mq-non-leaf mq-overline"');
+LatexCmds.seg = bind(Style, '\\seg', 'span', 'class="mq-non-leaf mq-overline"');
 LatexCmds.arc = bind(Style, '\\arc', 'span', 'class="mq-non-leaf mq-overline mq-arc"');
 LatexCmds.ray = bind(Style, '\\ray', 'span', 'class="mq-non-leaf mq-overarrow mq-arrow-right"');
 LatexCmds.line = LatexCmds.lin = bind(Style, '\\lin', 'span', 'class="mq-non-leaf mq-overarrow mq-line"');
-
 
 // `\textcolor{color}{math}` will apply a color to the given math content, where
 // `color` is any valid CSS Color Value (see [SitePoint docs][] (recommended),
