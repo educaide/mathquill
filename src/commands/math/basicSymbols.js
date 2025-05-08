@@ -242,6 +242,8 @@ LatexCmds.backslash = bind(VanillaSymbol,'\\backslash ','\\');
 if (!CharCmds['\\']) CharCmds['\\'] = LatexCmds.backslash;
 
 LatexCmds.$ = bind(VanillaSymbol, '\\$', '$');
+// EAS: add \cents command for cent symbol
+LatexCmds.cents = bind(VanillaSymbol, '\\cents ','&cent;');
 
 // does not use Symbola font
 var NonSymbolaSymbol = P(Symbol, function(_, super_) {
