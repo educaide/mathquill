@@ -243,7 +243,10 @@ LatexCmds.rbrack = bind(VanillaSymbol, ']');
 //various symbols
 LatexCmds.slash = bind(VanillaSymbol, '/');
 LatexCmds.vert = bind(VanillaSymbol,'|');
-LatexCmds.perp = LatexCmds.perpendicular = bind(VanillaSymbol,'\\perp ','&perp;');
+// EAS: use the unicode character so it can be combied with the `\not` command for \not\perp.
+LatexCmds.perp = LatexCmds.perpendicular = bind(VanillaSymbol,'\\perp ','\u27C2');
+// EAS: add '\not\perp'.
+LatexCmds.notperp = bind(VanillaSymbol,'\\not\\perp','\u0338\u27C2');
 LatexCmds.nabla = LatexCmds.del = bind(VanillaSymbol,'\\nabla ','&nabla;');
 LatexCmds.hbar = bind(VanillaSymbol,'\\hbar ','&#8463;');
 
@@ -258,7 +261,8 @@ LatexCmds.bull = LatexCmds.bullet = bind(VanillaSymbol,'\\bullet ','&bull;');
 LatexCmds.setminus = LatexCmds.smallsetminus =
   bind(VanillaSymbol,'\\setminus ','&#8726;');
 
-LatexCmds.not = //bind(Symbol,'\\not ','<span class="not">/</span>');
+// EAS: Add distinct `\not` command, using u0338 (Combining Long Solidus Overlay), to combine with other symbols (e.g. \not\perp)
+LatexCmds.not = bind(VanillaSymbol,'\\not ','\u0338');
 LatexCmds['¬'] = LatexCmds.lnot = LatexCmds.neg = bind(VanillaSymbol,'\\neg ','&not;');
 
 LatexCmds['…'] = LatexCmds.dots = LatexCmds.ellip = LatexCmds.hellip =
